@@ -1,0 +1,21 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+
+  background-color: #191414;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  main {
+    min-width: 40vw;
+    background-color: white;
+    padding: 5rem;
+    border-radius: 9px;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
