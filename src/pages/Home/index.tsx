@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import styles from "./styles.module.scss";
@@ -6,6 +7,14 @@ import Layout from "@/Layout";
 import logo from "@/assets/logo.png";
 
 export function Home() {
+  useEffect(() => {
+    const users = localStorage.getItem("users");
+
+    if (!users) {
+      localStorage.setItem("users", JSON.stringify([]));
+    }
+  }, []);
+
   return (
     <Layout>
       <>
