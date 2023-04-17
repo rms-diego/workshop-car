@@ -1,38 +1,102 @@
-import { FormEvent } from "react";
+// import { FormEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import Layout from "@/Layout";
 
-import { Input } from "@/components/Input";
 import styles from "./styles.module.scss";
-import { useNavigate } from "react-router-dom";
+
+import { v4 as uuid } from "uuid";
+import { useForm } from "react-hook-form";
+import { CreateNewCustomerTypes } from "@/@types";
 
 export function Customer() {
   const navigate = useNavigate();
 
-  const handleSubmitForm = (event: FormEvent) => {
-    event.preventDefault();
+  const { register, handleSubmit, reset } = useForm<CreateNewCustomerTypes>({
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      carLicensePlate: "",
+      carName: "",
+      phoneNumber: "",
+    },
+  });
 
-    navigate("/qr-code/test");
+  const handleSubmitForm = ({
+    firstName,
+    lastName,
+    email,
+    phoneNumber,
+    carName,
+    carLicensePlate,
+  }: CreateNewCustomerTypes) => {
+    const userId = uuid();
+
+    let users = localStorage.getItem("users")!;
+
+    users = JSON.parse(users);
+
+    const newUser = {
+      userId,
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      carName,
+      carLicensePlate,
+    };
+
+    const addUser = [...users, newUser];
+    localStorage.setItem("users", JSON.stringify(addUser));
+    reset();
+
+    return navigate(`/qr-code/${userId}`);
   };
 
   return (
     <Layout>
-      <form className={styles.formContainer} onSubmit={handleSubmitForm}>
-        <Input label="Nome do cliente" type="text" placeholder="John Doe" />
+      <form
+        className={styles.formContainer}
+        onSubmit={handleSubmit(handleSubmitForm)}
+      >
+        <label className={styles.inputContainer}>
+          Nome do client
+          <input type="text" placeholder="John" {...register("firstName")} />
+        </label>
 
-        <Input
-          label="Email do client"
-          type="email"
-          placeholder="john.doe@email.com"
-        />
+        <label className={styles.inputContainer}>
+          Sobrenome do cliente
+          <input type="text" placeholder="Doe" {...register("lastName")} />
+        </label>
 
-        <Input
-          label="Telefone do cliente"
-          type="text"
-          placeholder="00 0 00000 - 0000"
-        />
+        <label className={styles.inputContainer}>
+          Email do cliente
+          <input
+            type="email"
+            placeholder="john.doe@email.com"
+            {...register("email")}
+          />
+        </label>
 
-        <Input label="Nome do carro" type="text" placeholder="HB 20" />
-        <Input label="Placa do carro" type="text" />
+        <label className={styles.inputContainer}>
+          Telefone do cliente
+          <input
+            type="text"
+            placeholder="00 0 00000 - 0000"
+            {...register("phoneNumber")}
+          />
+        </label>
+
+        <label className={styles.inputContainer}>
+          Nome do carro
+          <input type="text" placeholder="HB 20" {...register("carName")} />
+        </label>
+
+        <label className={styles.inputContainer}>
+          Placa do carro
+          <input type="text" {...register("carLicensePlate")} />
+        </label>
 
         <button type="submit">Criar Qr code</button>
       </form>
