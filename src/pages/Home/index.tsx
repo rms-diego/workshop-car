@@ -23,7 +23,7 @@ export function Home() {
           <button>Cadastrar um cliente</button>
         </Link>
 
-        <Link to="*" className={styles.linkContainer}>
+        <Link to="/qr-code/scanner" className={styles.linkContainer}>
           <button>Ler qr code do cliente</button>
         </Link>
 
