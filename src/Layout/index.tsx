@@ -9,13 +9,7 @@ export default function Layout({ children }: PropsWithChildren) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const goBackPage = () => {
-    switch (pathname) {
-      case "/customer/generate-qrcode": {
-        return navigate("/");
-      }
-    }
-  };
+  const goBackPage = () => navigate("/");
 
   return (
     <div className={styles.container}>
