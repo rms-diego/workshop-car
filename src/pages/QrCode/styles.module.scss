@@ -1,0 +1,27 @@
+.downloadButton {
+  width: 80%;
+  display: flex;
+  text-decoration: none;
+
+  button {
+    flex: 1;
+    cursor: pointer;
+    padding: 1rem 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #37b3cb;
+    color: white;
+    font-size: 1.1rem;
+
+    &:hover {
+      opacity: 0.8;
+      transition: 500ms;
+      background-color: #202b57;
+    }
+  }
+}
+
+.QRCode {
+  width: 18.75rem;
+  height: 18.75rem;
+}
